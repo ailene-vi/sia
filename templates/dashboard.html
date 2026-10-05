@@ -1,0 +1,59 @@
+﻿{% extends 'base.html' %}
+
+{% block title %}Dashboard | Student Calendar{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <p class="eyebrow">Overview</p>
+        <h2>Student Calendar Management System</h2>
+    </div>
+    <div class="action-row">
+        <a class="button primary" href="{% url 'app:schedule_add' %}">Add Schedule</a>
+        <a class="button secondary" href="{% url 'app:task_add' %}">Add Task</a>
+    </div>
+</div>
+
+<section class="card-section">
+    <div class="card">
+        <h3>Today's Schedule</h3>
+        {% if today_schedules %}
+            {% for schedule in today_schedules %}
+                <div class="list-item">
+                    <strong>{{ schedule.start_time|time:"g:i A" }} - {{ schedule.end_time|time:"g:i A" }}</strong>
+                    <p>{{ schedule.subject_name }}</p>
+                    <small>Room {{ schedule.room }}</small>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No classes scheduled for today.</p>
+        {% endif %}
+    </div>
+
+    <div class="card">
+        <h3>Upcoming Tasks</h3>
+        {% if upcoming_tasks %}
+            {% for task in upcoming_tasks %}
+                <div class="list-item">
+                    <strong>{{ task.task_name }}</strong>
+                    <p>Deadline: {{ task.deadline }}</p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No upcoming tasks.</p>
+        {% endif %}
+    </div>
+</section>
+
+<section class="card-section">
+    <div class="card full-width">
+        <h3>Quick Actions</h3>
+        <div class="quick-actions">
+            <a class="button primary" href="{% url 'app:schedule_add' %}">Add Schedule</a>
+            <a class="button primary" href="{% url 'app:task_add' %}">Add Task</a>
+            <a class="button secondary" href="{% url 'app:schedule_list' %}">View All Schedules</a>
+            <a class="button secondary" href="{% url 'app:task_list' %}">View All Tasks</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

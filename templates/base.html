@@ -1,0 +1,39 @@
+﻿{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Student Calendar Management System{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="page-shell">
+        <aside class="sidebar">
+            <div class="brand-box">
+                <h1>Student Calendar</h1>
+            </div>
+
+            <nav class="nav-menu">
+                <a href="{% url 'app:dashboard' %}">Dashboard</a>
+                <a href="{% url 'app:schedule_list' %}">Schedules</a>
+                <a href="{% url 'app:task_list' %}">Tasks</a>
+                <a href="{% url 'app:schedule_add' %}">Add Schedule</a>
+                <a href="{% url 'app:task_add' %}">Add Task</a>
+            </nav>
+        </aside>
+
+        <main class="content-area">
+            {% if messages %}
+                <div class="messages">
+                    {% for message in messages %}
+                        <div class="alert {% if message.tags %}{{ message.tags }}{% endif %}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+</body>
+</html>
